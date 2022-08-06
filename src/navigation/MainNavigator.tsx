@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {MainPage} from './mainNavigator/MainPage';
+import {BottomNavigator} from './mainNavigator/BottomNavigator';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -14,7 +14,7 @@ export const MainNavigator = () => {
       <Stack.Screen
         options={{headerShown: false}}
         name="Main"
-        component={MainPage}
+        component={BottomNavigator}
       />
     </Stack.Navigator>
   );

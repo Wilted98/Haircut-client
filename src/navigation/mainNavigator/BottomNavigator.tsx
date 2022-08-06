@@ -1,6 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Image} from 'react-native';
+import {Home} from './bottomNavigator/Home';
+import {Image, Text, View} from 'react-native';
 import {colors} from '../../constants/style';
 
 const Tab = createBottomTabNavigator();
@@ -13,32 +14,43 @@ export const BottomNavigator: React.FC = () => {
   return (
     <>
       <Tab.Navigator
-      // screenOptions={({ route }) => ({
-      //   tabBarIcon: ({ focused, color, size }) => {
-      //     let icon = require("../../assets/images/bottomBar/plus.png");
-      //     if (route.name === "Home") {
-      //       icon = require("../../assets/images/bottomBar/sm-solid-home.png");
-      //     } else if (route.name === "Schedule") {
-      //       icon = require("../../assets/images/bottomBar/ios-calendar.png");
-      //     } else if (route.name === "Following") {
-      //       icon = require("../../assets/images/bottomBar/sm-solid-friends.png");
-      //     } else if (route.name === "Explore") {
-      //       icon = require("../../assets/images/bottomBar/ios-compass.png");
-      //     }
-      //     const tintColor = focused ? colors.accent : colors.text;
-      //     return <Image source={icon} style={{ tintColor: tintColor }} />;
-      //   },
-      // })}
-      >
-        <Tab.Screen name="Home" component={FeedPage} />
-        <Tab.Screen name="Schedule" component={SchedulePage} />
-        <Tab.Screen
-          name="Create"
-          component={EmptyComponent}
-          options={{tabBarButton: props => <CreateRoomButton {...props} />}}
-        />
-        <Tab.Screen name="Explore" component={ExplorePage} />
-        <Tab.Screen name="Following" component={FollowingPage} />
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let icon = require('../../assets/bottomBar/plus.png');
+            if (route.name === 'Home') {
+              icon = require('../../assets/bottomBar/sm-solid-home.png');
+            } else if (route.name === 'Schedule') {
+              icon = require('../../assets/bottomBar/ios-calendar.png');
+            } else if (route.name === 'Following') {
+              icon = require('../../assets/bottomBar/sm-solid-friends.png');
+            } else if (route.name === 'Explore') {
+              icon = require('../../assets/bottomBar/ios-compass.png');
+            }
+            const tintColor = focused ? colors.accent : '#B6B7B7';
+            return (
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Image source={icon} style={{tintColor: tintColor}} />
+                <Text style={{color: focused ? colors.accent : '#B6B7B7'}}>
+                  {route.name}
+                </Text>
+              </View>
+            );
+          },
+          tabBarActiveTintColor: colors.accent,
+          tabBarInactiveTintColor: '#B6B7B7',
+
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            backgroundColor: '#fff',
+            height: 80,
+          },
+          headerShown: false,
+        })}>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Schedule" component={Home} />
+        <Tab.Screen name="Create" component={Home} />
+        <Tab.Screen name="Explore" component={Home} />
+        <Tab.Screen name="Following" component={Home} />
       </Tab.Navigator>
     </>
   );
