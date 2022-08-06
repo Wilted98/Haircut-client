@@ -153,7 +153,7 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
                 email: form.email,
               },
             })
-              .then(res => console.log(res.data, 'fck'))
+              .then()
               .catch(err => console.log(err));
           } else {
             await login({
@@ -162,7 +162,7 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
                 email: form.email,
               },
             })
-              .then(res => console.log(res.error, 'fck'))
+              .then()
               .catch(err => console.log(err));
           }
         }}

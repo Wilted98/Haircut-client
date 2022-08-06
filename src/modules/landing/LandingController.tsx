@@ -1,10 +1,8 @@
 import React from 'react';
 import {Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/LandingNavigator';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import * as RootNavigation from '../../navigation/RootNavigation';
 
 export type navOptions = 'signin' | 'signup';
 
@@ -26,16 +24,12 @@ export const LandingController: React.FC = () => {
 
       <View style={styles.btnsContainer}>
         <TouchableOpacity
-          onPress={() =>
-            RootNavigation.navigate('LoginSignUp', {page: 'signin'})
-          }
+          onPress={() => navigation.navigate('LoginSignUp', {page: 'signin'})}
           style={[styles.btnCont, {backgroundColor: '#9599B3'}]}>
           <Text style={styles.btnText}>LOG IN</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() =>
-            RootNavigation.navigate('LoginSignUp', {page: 'signup'})
-          }
+          onPress={() => navigation.navigate('LoginSignUp', {page: 'signup'})}
           style={[styles.btnCont, {backgroundColor: '#241332'}]}>
           <Text style={styles.btnText}>SIGN UP</Text>
         </TouchableOpacity>
