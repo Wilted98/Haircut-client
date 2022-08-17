@@ -11,6 +11,8 @@ import {useLoginMutation, useRegisterMutation} from '../../generated/graphql';
 
 import {RootStackParamList} from '../../navigation/LandingNavigator';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 type formProps = {
   username: string;
@@ -43,6 +45,11 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
 
   const [loginData, login] = useLoginMutation();
 
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, 'LandingPage'>
+    >();
+
   return (
     <View style={styles.container}>
       <View>
@@ -50,41 +57,54 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             marginTop: 40,
+            paddingHorizontal: 25,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              setActive('signin');
-              setForm(DEFAULT_STATE);
-            }}
-            style={active === 'signin' && styles.active}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '600',
-                fontFamily: 'Montserrat',
-                color: active === 'signin' ? '#fff' : '#A7A0AD',
-              }}>
-              SIGN IN
-            </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LandingPage')}>
+            <Icon name="chevron-back-outline" size={30} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setActive('signup');
-              setForm(DEFAULT_STATE);
-            }}
-            style={[{marginLeft: 25}, active === 'signup' && styles.active]}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '600',
-                fontFamily: 'Montserrat',
-                color: active === 'signup' ? '#fff' : '#A7A0AD',
-              }}>
-              SIGN UP
-            </Text>
-          </TouchableOpacity>
+
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                setActive('signin');
+                setForm(DEFAULT_STATE);
+              }}
+              style={active === 'signin' && styles.active}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: '600',
+                  fontFamily: 'Montserrat',
+                  color: active === 'signin' ? '#fff' : '#A7A0AD',
+                }}>
+                SIGN IN
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setActive('signup');
+                setForm(DEFAULT_STATE);
+              }}
+              style={[{marginLeft: 25}, active === 'signup' && styles.active]}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: '600',
+                  fontFamily: 'Montserrat',
+                  color: active === 'signup' ? '#fff' : '#A7A0AD',
+                }}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View />
         </View>
         <View style={{paddingHorizontal: 25, marginTop: 20}}>
           {/* If sign up is active */}
