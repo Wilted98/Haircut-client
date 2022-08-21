@@ -8,6 +8,7 @@ import {useLogoutMutation, useMeQuery} from '../../generated/graphql';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Keyboard} from 'react-native';
+import {HairStylist} from './components/HairStylist';
 
 export const Main: React.FC = () => {
   const [{data}] = useMeQuery();
@@ -27,6 +28,7 @@ export const Main: React.FC = () => {
           justifyContent: searchActive ? 'flex-start' : 'space-between',
           marginTop: 20,
           height: 40,
+          paddingHorizontal: 25,
         }}>
         <TouchableOpacity
           onPress={() => {
@@ -48,6 +50,24 @@ export const Main: React.FC = () => {
         )}
       </View>
       {/* End of header and searchbar */}
+
+      <View style={style.hairStylist}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: '700',
+            fontFamily: 'Poppins',
+            color: '#36486b',
+            marginBottom: 25,
+          }}>
+          Hair Stylist
+        </Text>
+        <HairStylist
+          hairStylistName="Cameron Jones"
+          salonName="Frizeria lui Alex"
+          rating="4.8"
+        />
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -57,6 +77,17 @@ const style = StyleSheet.create({
     backgroundColor: '#2E1643',
     width: '100%',
     height: '100%',
-    paddingHorizontal: 25,
+    justifyContent: 'space-between',
+  },
+  hairStylist: {
+    height: '88%',
+    width: '100%',
+    zIndex: 10,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    overflow: 'hidden',
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
 });
