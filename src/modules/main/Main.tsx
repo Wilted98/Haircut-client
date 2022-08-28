@@ -4,17 +4,21 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-import {useLogoutMutation, useMeQuery} from '../../generated/graphql';
+import {
+  GetAllHairStylistsQueryVariables,
+  useGetAllHairStylistsQuery,
+  useLogoutMutation,
+  useMeQuery,
+} from '../../generated/graphql';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Keyboard} from 'react-native';
 import {HairStylist} from './components/HairStylist';
 
 export const Main: React.FC = () => {
-  const [{data}] = useMeQuery();
-
   const [, logout] = useLogoutMutation();
   const [searchActive, setSearchActive] = React.useState<boolean>(false);
+  const [{data}] = useGetAllHairStylistsQuery();
 
   return (
     <TouchableWithoutFeedback
@@ -62,11 +66,16 @@ export const Main: React.FC = () => {
           }}>
           Hair Stylist
         </Text>
-        <HairStylist
-          hairStylistName="Cameron Jones"
-          salonName="Frizeria lui Alex"
-          rating="4.8"
-        />
+        {data?.getAllHairStylists.map(hairstylist => {
+          return (
+            <HairStylist
+              key={hairstylist.id}
+              hairStylistName={hairstylist.name}
+              salonName={hairstylist.salon?.name as string}
+              rating={hairstylist.salon?.rating as number}
+            />
+          );
+        })}
       </View>
     </TouchableWithoutFeedback>
   );

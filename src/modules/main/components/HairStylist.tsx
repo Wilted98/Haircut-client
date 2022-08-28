@@ -5,7 +5,7 @@ import Star from 'react-native-vector-icons/FontAwesome';
 type hairstylistprops = {
   hairStylistName: string;
   salonName: string;
-  rating: string;
+  rating: number;
 };
 
 export const HairStylist: React.FC<hairstylistprops> = ({
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     position: 'relative',
+    marginBottom: 15,
   },
   rightTriangle: {
     width: 0,

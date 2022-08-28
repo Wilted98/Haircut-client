@@ -1,0 +1,11 @@
+query getAllHairStylists {
+  getAllHairStylists {
+    id
+    name
+    salon {
+      id
+      name
+      rating
+    }
+  }
+}
