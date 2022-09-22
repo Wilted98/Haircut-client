@@ -1,6 +1,9 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Star from 'react-native-vector-icons/FontAwesome';
+import {RootStackParamList} from '../../../navigation/MainNavigator';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 type hairstylistprops = {
   hairStylistName: string;
@@ -14,8 +17,18 @@ export const HairStylist: React.FC<hairstylistprops> = ({
   rating,
 }) => {
   const bgImage = require('../../../assets/salonPhotos/Salon_1.webp');
+
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<RootStackParamList, 'SalonDetails'>
+    >();
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('SalonDetails', {SalonId: 333});
+      }}>
       <Image style={styles.backgroundImage} source={bgImage} />
       <View style={styles.rightTriangle}></View>
       <Text

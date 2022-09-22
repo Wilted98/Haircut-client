@@ -3,12 +3,12 @@ import React from 'react';
 import {LandingPage} from './mainNavigator/LandingPage';
 import {LoginSignUpPage} from './mainNavigator/LoginSignupPage';
 
-export type RootStackParamList = {
+export type LandingStackParamList = {
   LandingPage: undefined;
   LoginSignUp: {page: 'signin' | 'signup'};
 };
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<LandingStackParamList>();
 
 export const LandingNavigator = () => {
   return (

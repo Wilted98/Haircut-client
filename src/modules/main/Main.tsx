@@ -1,14 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import {
-  GetAllHairStylistsQueryVariables,
   useGetAllHairStylistsQuery,
   useLogoutMutation,
-  useMeQuery,
 } from '../../generated/graphql';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -56,26 +54,28 @@ export const Main: React.FC = () => {
       {/* End of header and searchbar */}
 
       <View style={style.hairStylist}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: '700',
-            fontFamily: 'Poppins',
-            color: '#36486b',
-            marginBottom: 25,
-          }}>
-          Hair Stylist
-        </Text>
-        {data?.getAllHairStylists.map(hairstylist => {
-          return (
-            <HairStylist
-              key={hairstylist.id}
-              hairStylistName={hairstylist.name}
-              salonName={hairstylist.salon?.name as string}
-              rating={hairstylist.salon?.rating as number}
-            />
-          );
-        })}
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: '700',
+              fontFamily: 'Poppins',
+              color: '#36486b',
+              marginBottom: 25,
+            }}>
+            Hair Stylist
+          </Text>
+          {data?.getAllHairStylists.map(hairstylist => {
+            return (
+              <HairStylist
+                key={hairstylist.id}
+                hairStylistName={hairstylist.name}
+                salonName={hairstylist.salon?.name as string}
+                rating={hairstylist.salon?.rating as number}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
     </TouchableWithoutFeedback>
   );

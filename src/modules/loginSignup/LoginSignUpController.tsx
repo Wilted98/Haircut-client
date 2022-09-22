@@ -9,7 +9,7 @@ import {
 import {TextInputComponent} from '../../components/TextInput';
 import {useLoginMutation, useRegisterMutation} from '../../generated/graphql';
 
-import {RootStackParamList} from '../../navigation/LandingNavigator';
+import {LandingStackParamList} from '../../navigation/LandingNavigator';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
@@ -47,7 +47,7 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
 
   const navigation =
     useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'LandingPage'>
+      NativeStackNavigationProp<LandingStackParamList, 'LandingPage'>
     >();
 
   return (

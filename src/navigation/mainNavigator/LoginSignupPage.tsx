@@ -1,10 +1,14 @@
 import React from 'react';
 import {LoginSignUpController} from '../../modules/loginSignup/LoginSignUpController';
-import {RootStackParamList} from '../LandingNavigator';
-import {StackNavigationProps} from '../RootNavigation';
+import {LandingStackParamList} from '../LandingNavigator';
+import {RouteProp} from '@react-navigation/native';
 
-export const LoginSignUpPage: React.FC<
-  StackNavigationProps<RootStackParamList, 'LoginSignUp'>
-> = ({route}) => {
+type RootStackListProps = RouteProp<LandingStackParamList, 'LoginSignUp'>;
+
+type LoginSignUpPageProp = {
+  route: RootStackListProps;
+};
+
+export const LoginSignUpPage: React.FC<LoginSignUpPageProp> = ({route}) => {
   return <LoginSignUpController page={route.params.page} />;
 };
