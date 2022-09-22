@@ -9,12 +9,14 @@ type hairstylistprops = {
   hairStylistName: string;
   salonName: string;
   rating: number;
+  id: number;
 };
 
 export const HairStylist: React.FC<hairstylistprops> = ({
   hairStylistName,
   salonName,
   rating,
+  id,
 }) => {
   const bgImage = require('../../../assets/salonPhotos/Salon_1.webp');
 
@@ -27,7 +29,7 @@ export const HairStylist: React.FC<hairstylistprops> = ({
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate('SalonDetails', {SalonId: 333});
+        navigation.navigate('SalonDetails', {SalonId: id});
       }}>
       <Image style={styles.backgroundImage} source={bgImage} />
       <View style={styles.rightTriangle}></View>

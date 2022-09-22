@@ -172,18 +172,14 @@ export const LoginSignUpController: React.FC<LoginSignUpControllerProps> = ({
                 password: form.password,
                 email: form.email,
               },
-            })
-              .then()
-              .catch(err => console.log(err));
+            });
           } else {
             await login({
               options: {
                 password: form.password,
                 email: form.email,
               },
-            })
-              .then()
-              .catch(err => console.log(err));
+            });
           }
         }}
         style={{

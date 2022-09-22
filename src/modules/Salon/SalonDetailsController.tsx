@@ -1,16 +1,31 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {useGetSalonByIdMutation} from '../../generated/graphql';
+import LoadingAnimation from '../../shared/LoadingAnimation';
 
 type SalonDetailsProps = {
   SalonId: number;
 };
 
 const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
-  console.log(SalonId, 'aaa');
+  const [{data, fetching}, getSalonDetails] = useGetSalonByIdMutation();
+
+  const getData = async () => {
+    await getSalonDetails({id: SalonId});
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <View>
-      <Text>Hello, MotherFuckers!</Text>
-    </View>
+    <>
+      <LoadingAnimation loadingState={fetching} />
+
+      <View>
+        <Text>Hello, {data?.getSalonById?.name}!</Text>
+      </View>
+    </>
   );
 };
 

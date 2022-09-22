@@ -1,0 +1,16 @@
+mutation GetSalonById($id: Float!) {
+  getSalonById(id: $id) {
+    id
+    name
+    rating
+    services {
+      ID
+      name
+      price
+    }
+    users {
+      id
+      name
+    }
+  }
+}

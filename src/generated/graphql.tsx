@@ -25,6 +25,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createSalon: Salon;
   createService: Service;
+  getSalonById?: Maybe<Salon>;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -38,6 +39,11 @@ export type MutationCreateSalonArgs = {
 
 export type MutationCreateServiceArgs = {
   options: ServiceOptions;
+};
+
+
+export type MutationGetSalonByIdArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -132,6 +138,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
 
+export type GetSalonByIdMutationVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type GetSalonByIdMutation = { __typename?: 'Mutation', getSalonById?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', ID: number, name: string, price: number }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
+
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -193,6 +206,28 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const GetSalonByIdDocument = gql`
+    mutation GetSalonById($id: Float!) {
+  getSalonById(id: $id) {
+    id
+    name
+    rating
+    services {
+      ID
+      name
+      price
+    }
+    users {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetSalonByIdMutation() {
+  return Urql.useMutation<GetSalonByIdMutation, GetSalonByIdMutationVariables>(GetSalonByIdDocument);
 };
 export const GetAllHairStylistsDocument = gql`
     query getAllHairStylists {
