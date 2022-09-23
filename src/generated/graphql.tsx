@@ -25,7 +25,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   createSalon: Salon;
   createService: Service;
-  getSalonById?: Maybe<Salon>;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -42,11 +41,6 @@ export type MutationCreateServiceArgs = {
 };
 
 
-export type MutationGetSalonByIdArgs = {
-  id: Scalars['Float'];
-};
-
-
 export type MutationLoginArgs = {
   options: LoginOptions;
 };
@@ -59,9 +53,15 @@ export type MutationRegisterArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllHairStylists: Array<User>;
+  getSalon?: Maybe<Salon>;
   getServices: Array<Service>;
   getUsers: Array<User>;
   me?: Maybe<User>;
+};
+
+
+export type QueryGetSalonArgs = {
+  id: Scalars['Int'];
 };
 
 export type Salon = {
@@ -75,7 +75,7 @@ export type Salon = {
 
 export type Service = {
   __typename?: 'Service';
-  ID: Scalars['Float'];
+  id: Scalars['Float'];
   name: Scalars['String'];
   price: Scalars['Float'];
   salon?: Maybe<Salon>;
@@ -138,17 +138,17 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
 
-export type GetSalonByIdMutationVariables = Exact<{
-  id: Scalars['Float'];
-}>;
-
-
-export type GetSalonByIdMutation = { __typename?: 'Mutation', getSalonById?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', ID: number, name: string, price: number }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
-
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllHairStylistsQuery = { __typename?: 'Query', getAllHairStylists: Array<{ __typename?: 'User', id: number, name: string, salon?: { __typename?: 'Salon', id: number, name: string, rating: number } | null }> };
+
+export type GetSalonQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', id: number, name: string, price: number }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -207,28 +207,6 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
-export const GetSalonByIdDocument = gql`
-    mutation GetSalonById($id: Float!) {
-  getSalonById(id: $id) {
-    id
-    name
-    rating
-    services {
-      ID
-      name
-      price
-    }
-    users {
-      id
-      name
-    }
-  }
-}
-    `;
-
-export function useGetSalonByIdMutation() {
-  return Urql.useMutation<GetSalonByIdMutation, GetSalonByIdMutationVariables>(GetSalonByIdDocument);
-};
 export const GetAllHairStylistsDocument = gql`
     query getAllHairStylists {
   getAllHairStylists {
@@ -245,6 +223,28 @@ export const GetAllHairStylistsDocument = gql`
 
 export function useGetAllHairStylistsQuery(options?: Omit<Urql.UseQueryArgs<GetAllHairStylistsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAllHairStylistsQuery>({ query: GetAllHairStylistsDocument, ...options });
+};
+export const GetSalonDocument = gql`
+    query getSalon($id: Int!) {
+  getSalon(id: $id) {
+    id
+    name
+    rating
+    services {
+      id
+      name
+      price
+    }
+    users {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetSalonQuery(options: Omit<Urql.UseQueryArgs<GetSalonQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetSalonQuery>({ query: GetSalonDocument, ...options });
 };
 export const MeDocument = gql`
     query Me {

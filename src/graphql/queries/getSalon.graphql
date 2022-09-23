@@ -1,10 +1,10 @@
-mutation GetSalonById($id: Float!) {
-  getSalonById(id: $id) {
+query getSalon($id: Int!) {
+  getSalon(id: $id) {
     id
     name
     rating
     services {
-      ID
+      id
       name
       price
     }

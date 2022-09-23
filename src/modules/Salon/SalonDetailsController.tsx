@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {useGetSalonByIdMutation} from '../../generated/graphql';
+import {useGetSalonQuery} from '../../generated/graphql';
 import LoadingAnimation from '../../shared/LoadingAnimation';
 
 type SalonDetailsProps = {
@@ -8,22 +8,14 @@ type SalonDetailsProps = {
 };
 
 const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
-  const [{data, fetching}, getSalonDetails] = useGetSalonByIdMutation();
-
-  const getData = async () => {
-    await getSalonDetails({id: SalonId});
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
+  const [{data, fetching}] = useGetSalonQuery({variables: {id: SalonId}});
 
   return (
     <>
       <LoadingAnimation loadingState={fetching} />
 
       <View>
-        <Text>Hello, {data?.getSalonById?.name}!</Text>
+        <Text>Hello,{data?.getSalon?.name}</Text>
       </View>
     </>
   );
