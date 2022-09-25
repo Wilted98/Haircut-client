@@ -75,6 +75,8 @@ export type Salon = {
 
 export type Service = {
   __typename?: 'Service';
+  currency: Scalars['String'];
+  duration: Scalars['Float'];
   id: Scalars['Float'];
   name: Scalars['String'];
   price: Scalars['Float'];
@@ -148,7 +150,7 @@ export type GetSalonQueryVariables = Exact<{
 }>;
 
 
-export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', id: number, name: string, price: number }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
+export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', id: number, name: string, price: number, duration: number, currency: string }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -234,6 +236,8 @@ export const GetSalonDocument = gql`
       id
       name
       price
+      duration
+      currency
     }
     users {
       id

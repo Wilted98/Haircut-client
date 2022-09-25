@@ -7,6 +7,8 @@ query getSalon($id: Int!) {
       id
       name
       price
+      duration
+      currency
     }
     users {
       id
