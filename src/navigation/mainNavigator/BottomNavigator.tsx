@@ -21,7 +21,7 @@ export const BottomNavigator: React.FC = () => {
               icon = require('../../assets/bottomBar/sm-solid-home.png');
             } else if (route.name === 'Schedule') {
               icon = require('../../assets/bottomBar/ios-calendar.png');
-            } else if (route.name === 'Following') {
+            } else if (route.name === 'Profile') {
               icon = require('../../assets/bottomBar/sm-solid-friends.png');
             } else if (route.name === 'Explore') {
               icon = require('../../assets/bottomBar/ios-compass.png');
@@ -47,10 +47,9 @@ export const BottomNavigator: React.FC = () => {
           headerShown: false,
         })}>
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Schedule" component={Home} />
         <Tab.Screen name="Create" component={Home} />
         <Tab.Screen name="Explore" component={Home} />
-        <Tab.Screen name="Following" component={Home} />
+        <Tab.Screen name="Profile" component={Home} />
       </Tab.Navigator>
     </>
   );

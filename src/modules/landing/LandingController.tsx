@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../navigation/LandingNavigator';
+import {LandingStackParamList} from '../../navigation/LandingNavigator';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export type navOptions = 'signin' | 'signup';
@@ -10,7 +10,7 @@ export const LandingController: React.FC = () => {
   const bgimage = require('../../assets/image.png');
   const navigation =
     useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'LandingPage'>
+      NativeStackNavigationProp<LandingStackParamList, 'LandingPage'>
     >();
 
   return (
