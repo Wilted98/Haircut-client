@@ -1,0 +1,3 @@
+mutation UpdateUserPicture($url: String!, $updateUserPictureId: Float!) {
+  updateUserPicture(url: $url, id: $updateUserPictureId)
+}

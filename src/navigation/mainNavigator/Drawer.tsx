@@ -11,7 +11,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {useLogoutMutation, useMeQuery} from '../../generated/graphql';
+import {
+  useLogoutMutation,
+  useMeQuery,
+  useUpdateUserPictureMutation,
+} from '../../generated/graphql';
 import {handleChoosePhoto} from '../../shared/UploadImageCloud';
 
 const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
@@ -19,13 +23,12 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
   const [progress, setProgress] = React.useState<number>(0);
 
   const [{data}] = useMeQuery();
-  const [_, logOut] = useLogoutMutation();
+  const [, logOut] = useLogoutMutation();
+  const [, updateProfile] = useUpdateUserPictureMutation();
 
   const ImagePicker = async () => {
-    return await handleChoosePhoto(setImg);
+    return await handleChoosePhoto(setImg, data?.me?.id!, updateProfile);
   };
-
-  const handleSave = async () => {};
 
   const onLogout = () => logOut();
 
@@ -44,7 +47,7 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
                 marginTop: 15,
                 alignItems: 'center',
               }}>
-              {true ? (
+              {data?.me?.profile_picture ? (
                 <View
                   style={{
                     borderWidth: 2.5,
@@ -54,9 +57,7 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
                   }}>
                   <Avatar.Image
                     source={{
-                      uri: img
-                        ? img
-                        : 'https://randomuser.me/api/portraits/men/75.jpg',
+                      uri: img ? img : data?.me?.profile_picture,
                     }}
                     size={100}
                   />
@@ -77,7 +78,11 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
                 </View>
               ) : (
                 <View style={{position: 'relative'}}>
-                  <FontAwesome name="user-circle-o" size={100} />
+                  <FontAwesome
+                    name="user-circle-o"
+                    size={100}
+                    color="#c4c4c4"
+                  />
 
                   <TouchableOpacity
                     onPress={() => ImagePicker()}

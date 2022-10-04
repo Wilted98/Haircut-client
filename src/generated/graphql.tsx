@@ -28,6 +28,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+  updateUserPicture: Scalars['String'];
 };
 
 
@@ -48,6 +49,12 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   options: UserRegisterOptions;
+};
+
+
+export type MutationUpdateUserPictureArgs = {
+  id: Scalars['Float'];
+  url: Scalars['String'];
 };
 
 export type Query = {
@@ -95,6 +102,7 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  profile_picture?: Maybe<Scalars['String']>;
   salon?: Maybe<Salon>;
   updatedAt: Scalars['String'];
   user_type: Scalars['String'];
@@ -119,14 +127,14 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type RegularUserFragment = { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string };
+export type RegularUserFragment = { __typename?: 'User', id: number, name: string, email: string, profile_picture?: string | null, createdAt: string, updatedAt: string };
 
 export type LoginMutationVariables = Exact<{
   options: LoginOptions;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, profile_picture?: string | null, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -138,7 +146,15 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'userResponse', user?: { __typename?: 'User', id: number, name: string, email: string, profile_picture?: string | null, createdAt: string, updatedAt: string } | null, errors?: Array<{ __typename?: 'ErrorsField', field: string, message: string }> | null } };
+
+export type UpdateUserPictureMutationVariables = Exact<{
+  url: Scalars['String'];
+  updateUserPictureId: Scalars['Float'];
+}>;
+
+
+export type UpdateUserPictureMutation = { __typename?: 'Mutation', updateUserPicture: string };
 
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -155,13 +171,14 @@ export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'S
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, name: string, email: string, createdAt: string, updatedAt: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, name: string, email: string, profile_picture?: string | null, createdAt: string, updatedAt: string } | null };
 
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
   name
   email
+  profile_picture
   createdAt
   updatedAt
 }
@@ -208,6 +225,15 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UpdateUserPictureDocument = gql`
+    mutation UpdateUserPicture($url: String!, $updateUserPictureId: Float!) {
+  updateUserPicture(url: $url, id: $updateUserPictureId)
+}
+    `;
+
+export function useUpdateUserPictureMutation() {
+  return Urql.useMutation<UpdateUserPictureMutation, UpdateUserPictureMutationVariables>(UpdateUserPictureDocument);
 };
 export const GetAllHairStylistsDocument = gql`
     query getAllHairStylists {

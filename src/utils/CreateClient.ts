@@ -6,6 +6,7 @@ import {
   MeDocument,
   LogoutMutation,
   RegisterMutation,
+  UpdateUserPictureMutation,
 } from '../generated/graphql';
 import {betterUpdateQuery} from './betterUpdateQuery';
 import {SERVER_URL} from './constants';
@@ -33,6 +34,18 @@ export const client = createClient({
                     me: result.login.user,
                   };
                 }
+              },
+            );
+          },
+          UpdateUserPicture: (_result, args, cache, info) => {
+            betterUpdateQuery<UpdateUserPictureMutation, MeQuery>(
+              cache,
+              {query: MeDocument},
+              _result,
+              (result, query) => {
+                return {
+                  me: {...query.me!, profile_picture: result.updateUserPicture},
+                };
               },
             );
           },

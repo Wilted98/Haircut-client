@@ -2,11 +2,12 @@ import {ToastAndroid} from 'react-native';
 import * as ImagePicker from 'react-native-image-picker/src';
 import ImageResizer from 'react-native-image-resizer';
 import RNFS from 'react-native-fs';
-import axios from 'axios';
 import React from 'react';
 
 export const handleChoosePhoto = async (
   setImg: React.Dispatch<React.SetStateAction<string | null>>,
+  currID: number,
+  updateProfileImage: any,
 ) => {
   return ImagePicker.launchImageLibrary(
     {mediaType: 'photo', includeBase64: true},
@@ -38,10 +39,12 @@ export const handleChoosePhoto = async (
             })
               .then(async res => {
                 return res.json();
-
-                //send image
               })
               .then(response => {
+                updateProfileImage({
+                  url: response.url,
+                  updateUserPictureId: currID,
+                });
                 setImg(response.url);
               })
               .catch(err => {
