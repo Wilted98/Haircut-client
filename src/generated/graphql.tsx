@@ -60,6 +60,7 @@ export type MutationUpdateUserPictureArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllHairStylists: Array<User>;
+  getAllSalons?: Maybe<Array<Salon>>;
   getSalon?: Maybe<Salon>;
   getServices: Array<Service>;
   getUsers: Array<User>;
@@ -156,6 +157,11 @@ export type UpdateUserPictureMutationVariables = Exact<{
 
 export type UpdateUserPictureMutation = { __typename?: 'Mutation', updateUserPicture: string };
 
+export type GetAllSalonsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSalonsQuery = { __typename?: 'Query', getAllSalons?: Array<{ __typename?: 'Salon', id: number, name: string, rating: number }> | null };
+
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -234,6 +240,19 @@ export const UpdateUserPictureDocument = gql`
 
 export function useUpdateUserPictureMutation() {
   return Urql.useMutation<UpdateUserPictureMutation, UpdateUserPictureMutationVariables>(UpdateUserPictureDocument);
+};
+export const GetAllSalonsDocument = gql`
+    query getAllSalons {
+  getAllSalons {
+    id
+    name
+    rating
+  }
+}
+    `;
+
+export function useGetAllSalonsQuery(options?: Omit<Urql.UseQueryArgs<GetAllSalonsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetAllSalonsQuery>({ query: GetAllSalonsDocument, ...options });
 };
 export const GetAllHairStylistsDocument = gql`
     query getAllHairStylists {

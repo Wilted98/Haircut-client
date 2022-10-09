@@ -14,7 +14,7 @@ const NavBarSalon: React.FC<NavBarSalonProps> = ({
 }) => {
   return (
     <React.Fragment>
-      {salon_titles.map((item: string, index: number) => {
+      {salon_titles.map((item: string, index: number): React.ReactElement => {
         return (
           <TouchableOpacity
             key={index}

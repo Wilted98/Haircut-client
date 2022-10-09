@@ -4,6 +4,10 @@ import {useGetSalonQuery} from '../../generated/graphql';
 import LoadingAnimation from '../../shared/LoadingAnimation';
 import NavBarSalon from './components/NavBarSalon';
 import ServiceList from './components/ServiceList';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../navigation/MainNavigator';
 
 const heightScreen = Dimensions.get('screen').height;
 
@@ -13,24 +17,57 @@ type SalonDetailsProps = {
 
 const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
   const salonPhoto = require('../../assets/salonPhotos/salon2.webp');
-  const SALON_TITLES: Array<string> = ['Services', 'Gallery', 'Review'];
+  const SALON_TITLES: Array<string> = ['Services', 'Gallery', 'Reviews'];
 
   const [{data, fetching}] = useGetSalonQuery({variables: {id: SalonId}});
   const [activeTitle, setActiveTitle] = React.useState<number>(0);
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <View style={{width: '100%', height: '100%'}}>
+    <View style={{width: '100%', height: '100%', position: 'relative'}}>
       <LoadingAnimation loadingState={fetching} />
 
-      <Image
-        source={salonPhoto}
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          top: 40,
+          left: 10,
+          zIndex: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 40,
+          height: 40,
+        }}>
+        <Icon name="chevron-back-outline" size={35} color="#fff" />
+      </TouchableOpacity>
+
+      <View
         style={{
           width: '100%',
           height: heightScreen / 3,
-          opacity: 1,
-          backgroundColor: 'rgba(0,0,0,0,6)',
-        }}
-      />
+          position: 'relative',
+        }}>
+        <Image
+          source={salonPhoto}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,0.4)',
+          }}
+        />
+      </View>
       <View
         style={{
           width: '100%',
