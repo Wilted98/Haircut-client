@@ -20,7 +20,6 @@ import {handleChoosePhoto} from '../../shared/UploadImageCloud';
 
 const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
   const [img, setImg] = React.useState<string | null>(null);
-  const [progress, setProgress] = React.useState<number>(0);
 
   const [{data}] = useMeQuery();
   const [, logOut] = useLogoutMutation();
@@ -47,7 +46,7 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
                 marginTop: 15,
                 alignItems: 'center',
               }}>
-              {data?.me?.profile_picture ? (
+              {data?.me?.profile_picture || img ? (
                 <View
                   style={{
                     borderWidth: 2.5,
@@ -57,7 +56,7 @@ const DrawerScreen: React.FC<DrawerContentComponentProps> = props => {
                   }}>
                   <Avatar.Image
                     source={{
-                      uri: img ? img : data?.me?.profile_picture,
+                      uri: img ? img : data?.me?.profile_picture!,
                     }}
                     size={100}
                   />

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import CommonButton from '../../../components/CommonButton';
 
 type SortModalProps = {
   modalVisible: boolean;
@@ -28,65 +29,28 @@ const SortModal: React.FC<SortModalProps> = ({
         <View
           style={{
             width: '100%',
-            height: '70%',
-            backgroundColor: '#8D81F8',
+            height: '30%',
+            backgroundColor: '#fff',
             borderRadius: 15,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <TouchableOpacity
+          <CommonButton
             onPress={() => {
               setActiveFilter('salons');
               setModalVisible(false);
             }}
-            style={{
-              width: '70%',
-              paddingHorizontal: 15,
-              paddingVertical: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: activeFilter === 'salons' ? 'green' : '#fff',
-              borderRadius: 10,
-              marginTop: 10,
-            }}>
-            <Text
-              style={{
-                color: activeFilter === 'salons' ? '#fff' : '#7265E3',
-                fontSize: 16,
-                fontWeight: '500',
-                fontFamily: 'Poppins',
-                textAlign: 'center',
-              }}>
-              Salons
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            active={activeFilter === 'salons'}
+            name="Salons"
+          />
+          <CommonButton
             onPress={() => {
               setActiveFilter('hairstylists');
               setModalVisible(false);
             }}
-            style={{
-              width: '70%',
-              paddingHorizontal: 15,
-              paddingVertical: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor:
-                activeFilter === 'hairstylists' ? 'green' : '#fff',
-              borderRadius: 10,
-              marginTop: 10,
-            }}>
-            <Text
-              style={{
-                color: activeFilter === 'hairstylists' ? '#fff' : '#7265E3',
-                fontSize: 16,
-                fontWeight: '500',
-                fontFamily: 'Poppins',
-                textAlign: 'center',
-              }}>
-              Hair Stylists
-            </Text>
-          </TouchableOpacity>
+            active={activeFilter === 'hairstylists'}
+            name="Hair Stylists"
+          />
         </View>
       </View>
     </Modal>
