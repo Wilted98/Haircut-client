@@ -115,7 +115,7 @@ export const Main: React.FC = () => {
                   key={hairstylist.id}
                   hairStylistName={hairstylist.name}
                   salonName={hairstylist.salon?.name as string}
-                  rating={hairstylist.salon?.rating as number}
+                  rating={hairstylist.rating as number}
                   id={hairstylist.salon?.id as number}
                 />
               );

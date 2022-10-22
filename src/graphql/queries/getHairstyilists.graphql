@@ -2,6 +2,7 @@ query getAllHairStylists {
   getAllHairStylists {
     id
     name
+    rating
     salon {
       id
       name

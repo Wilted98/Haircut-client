@@ -23,12 +23,18 @@ export type ErrorsField = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createReview: Review;
   createSalon: Salon;
   createService: Service;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
   updateUserPicture: Scalars['String'];
+};
+
+
+export type MutationCreateReviewArgs = {
+  options: ReviewOptions;
 };
 
 
@@ -72,11 +78,34 @@ export type QueryGetSalonArgs = {
   id: Scalars['Int'];
 };
 
+export type Review = {
+  __typename?: 'Review';
+  comment: Scalars['String'];
+  createdAt: Scalars['String'];
+  hairstylist_rating: Scalars['Float'];
+  id: Scalars['Float'];
+  postedBy: Scalars['Float'];
+  salon?: Maybe<Salon>;
+  salon_rating: Scalars['Float'];
+  updatedAt: Scalars['String'];
+  user?: Maybe<User>;
+};
+
+export type ReviewOptions = {
+  comment: Scalars['String'];
+  hairstylist_rating: Scalars['Float'];
+  postedBy: Scalars['Float'];
+  salon: Scalars['Float'];
+  salon_rating: Scalars['Float'];
+  user: Scalars['Float'];
+};
+
 export type Salon = {
   __typename?: 'Salon';
   id: Scalars['Float'];
   name: Scalars['String'];
   rating: Scalars['Float'];
+  review?: Maybe<Array<Review>>;
   services?: Maybe<Array<Service>>;
   users?: Maybe<Array<User>>;
 };
@@ -104,6 +133,8 @@ export type User = {
   id: Scalars['Float'];
   name: Scalars['String'];
   profile_picture?: Maybe<Scalars['String']>;
+  rating: Scalars['Float'];
+  review?: Maybe<Array<Review>>;
   salon?: Maybe<Salon>;
   updatedAt: Scalars['String'];
   user_type: Scalars['String'];
@@ -165,7 +196,7 @@ export type GetAllSalonsQuery = { __typename?: 'Query', getAllSalons?: Array<{ _
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllHairStylistsQuery = { __typename?: 'Query', getAllHairStylists: Array<{ __typename?: 'User', id: number, name: string, salon?: { __typename?: 'Salon', id: number, name: string, rating: number } | null }> };
+export type GetAllHairStylistsQuery = { __typename?: 'Query', getAllHairStylists: Array<{ __typename?: 'User', id: number, name: string, rating: number, salon?: { __typename?: 'Salon', id: number, name: string, rating: number } | null }> };
 
 export type GetSalonQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -259,6 +290,7 @@ export const GetAllHairStylistsDocument = gql`
   getAllHairStylists {
     id
     name
+    rating
     salon {
       id
       name
