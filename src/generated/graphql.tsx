@@ -67,10 +67,16 @@ export type Query = {
   __typename?: 'Query';
   getAllHairStylists: Array<User>;
   getAllSalons?: Maybe<Array<Salon>>;
+  getReviews?: Maybe<Array<Review>>;
   getSalon?: Maybe<Salon>;
   getServices: Array<Service>;
   getUsers: Array<User>;
   me?: Maybe<User>;
+};
+
+
+export type QueryGetReviewsArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -84,7 +90,7 @@ export type Review = {
   createdAt: Scalars['String'];
   hairstylist_rating: Scalars['Float'];
   id: Scalars['Float'];
-  postedBy: Scalars['Float'];
+  postedBy?: Maybe<User>;
   salon?: Maybe<Salon>;
   salon_rating: Scalars['Float'];
   updatedAt: Scalars['String'];
@@ -132,6 +138,7 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  postedBy?: Maybe<Array<Review>>;
   profile_picture?: Maybe<Scalars['String']>;
   rating: Scalars['Float'];
   review?: Maybe<Array<Review>>;
@@ -198,12 +205,19 @@ export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllHairStylistsQuery = { __typename?: 'Query', getAllHairStylists: Array<{ __typename?: 'User', id: number, name: string, rating: number, salon?: { __typename?: 'Salon', id: number, name: string, rating: number } | null }> };
 
+export type GetReviewsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetReviewsQuery = { __typename?: 'Query', getReviews?: Array<{ __typename?: 'Review', id: number, comment: string, createdAt: string, hairstylist_rating: number, postedBy?: { __typename?: 'User', name: string } | null, user?: { __typename?: 'User', name: string } | null }> | null };
+
 export type GetSalonQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'Salon', id: number, name: string, rating: number, services?: Array<{ __typename?: 'Service', id: number, name: string, price: number, duration: number, currency: string }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
+export type GetSalonQuery = { __typename?: 'Query', getSalon?: { __typename?: 'Salon', id: number, name: string, services?: Array<{ __typename?: 'Service', id: number, name: string, price: number, duration: number, currency: string }> | null, users?: Array<{ __typename?: 'User', id: number, name: string }> | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -303,12 +317,31 @@ export const GetAllHairStylistsDocument = gql`
 export function useGetAllHairStylistsQuery(options?: Omit<Urql.UseQueryArgs<GetAllHairStylistsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAllHairStylistsQuery>({ query: GetAllHairStylistsDocument, ...options });
 };
+export const GetReviewsDocument = gql`
+    query getReviews($id: Int!) {
+  getReviews(id: $id) {
+    id
+    comment
+    createdAt
+    hairstylist_rating
+    postedBy {
+      name
+    }
+    user {
+      name
+    }
+  }
+}
+    `;
+
+export function useGetReviewsQuery(options: Omit<Urql.UseQueryArgs<GetReviewsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetReviewsQuery>({ query: GetReviewsDocument, ...options });
+};
 export const GetSalonDocument = gql`
     query getSalon($id: Int!) {
   getSalon(id: $id) {
     id
     name
-    rating
     services {
       id
       name

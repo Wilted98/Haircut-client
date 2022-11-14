@@ -1,0 +1,14 @@
+query getReviews($id: Int!) {
+  getReviews(id: $id) {
+    id
+    comment
+    createdAt
+    hairstylist_rating
+    postedBy {
+      name
+    }
+    user {
+      name
+    }
+  }
+}

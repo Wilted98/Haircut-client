@@ -30,7 +30,10 @@ export const Main: React.FC = () => {
 
   return (
     <TouchableWithoutFeedback
-      onPress={Keyboard.dismiss}
+      onPress={() => {
+        Keyboard.dismiss();
+        setSearchActive(false);
+      }}
       style={style.container}>
       {/* Modal */}
       <SortModal
@@ -54,7 +57,7 @@ export const Main: React.FC = () => {
           onPress={() => {
             if (searchActive) setSearchActive(false);
           }}>
-          <Icon name="chevron-back-outline" size={30} color="#fff" />
+          <Icon name="chevron-back-outline" size={35} color="#fff" />
         </TouchableOpacity>
         {!searchActive ? (
           <TouchableOpacity onPress={() => setSearchActive(!searchActive)}>

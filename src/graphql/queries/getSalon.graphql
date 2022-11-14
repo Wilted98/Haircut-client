@@ -2,7 +2,6 @@ query getSalon($id: Int!) {
   getSalon(id: $id) {
     id
     name
-    rating
     services {
       id
       name

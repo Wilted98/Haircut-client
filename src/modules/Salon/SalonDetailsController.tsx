@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/MainNavigator';
+import ReviewList from './components/ReviewList';
 
 const heightScreen = Dimensions.get('screen').height;
 
@@ -33,8 +34,8 @@ const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
         onPress={() => navigation.goBack()}
         style={{
           position: 'absolute',
-          top: 40,
-          left: 10,
+          top: 21,
+          left: 17,
           zIndex: 20,
           alignItems: 'center',
           justifyContent: 'center',
@@ -91,8 +92,10 @@ const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
           />
         </View>
         <View style={{marginTop: 25}}>
-          {activeTitle === 0 && (
+          {activeTitle === 0 ? (
             <ServiceList serviceList={data?.getSalon?.services} />
+          ) : (
+            activeTitle === 2 && <ReviewList id={SalonId} />
           )}
         </View>
       </View>
