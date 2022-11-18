@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/MainNavigator';
 import ReviewList from './components/ReviewList';
+import {useIsFocused} from '@react-navigation/native';
 
 const heightScreen = Dimensions.get('screen').height;
 
@@ -22,9 +23,14 @@ const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
 
   const [{data, fetching}] = useGetSalonQuery({variables: {id: SalonId}});
   const [activeTitle, setActiveTitle] = React.useState<number>(0);
+  const focused = useIsFocused();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  React.useEffect(() => {
+    setActiveTitle(0);
+  }, [focused]);
 
   return (
     <View style={{width: '100%', height: '100%', position: 'relative'}}>

@@ -1,13 +1,15 @@
-query getReviews($id: Int!) {
-  getReviews(id: $id) {
+query getReviews($options: GetReviewsOptions!) {
+  getReviews(options: $options) {
     id
     comment
     createdAt
     hairstylist_rating
     postedBy {
+      id
       name
     }
     user {
+      id
       name
     }
   }

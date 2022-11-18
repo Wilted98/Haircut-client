@@ -19,12 +19,14 @@ const index: React.FC<indexProps> = ({
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       {[...new Array(numberofstars)].map((_, index) => {
         if (index + 1 <= rating) {
-          return <FA name="star" color={fullstarcolor} />;
+          return <FA key={index} name="star" color={fullstarcolor} />;
         }
         if (rating % index >= 0.5 && rating % index <= 1) {
-          return <FA name="star-half-empty" color={emptystarcolor} />;
+          return (
+            <FA key={index} name="star-half-empty" color={emptystarcolor} />
+          );
         }
-        return <FA name="star-o" color={emptystarcolor} />;
+        return <FA key={index} name="star-o" color={emptystarcolor} />;
       })}
     </View>
   );

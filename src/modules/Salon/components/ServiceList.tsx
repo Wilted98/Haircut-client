@@ -34,7 +34,7 @@ const ServiceList: React.FC<NavBarSalonProps> = ({serviceList}) => {
                   fontSize: 16,
                   fontWeight: '700',
                   fontFamily: 'Poppins',
-                  color: '#45176A',
+                  color: '#241332',
                 }}>
                 {item.name}
               </Text>
@@ -61,7 +61,7 @@ const ServiceList: React.FC<NavBarSalonProps> = ({serviceList}) => {
                   fontSize: 16,
                   fontWeight: '700',
                   fontFamily: 'Poppins',
-                  color: '#45176A',
+                  color: '#241332',
                 }}>
                 {item.price} {item.currency}
               </Text>

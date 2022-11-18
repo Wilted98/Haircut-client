@@ -21,6 +21,11 @@ export type ErrorsField = {
   message: Scalars['String'];
 };
 
+export type GetReviewsOptions = {
+  id: Scalars['Float'];
+  sortBy: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createReview: Review;
@@ -76,7 +81,7 @@ export type Query = {
 
 
 export type QueryGetReviewsArgs = {
-  id: Scalars['Int'];
+  options: GetReviewsOptions;
 };
 
 
@@ -206,11 +211,11 @@ export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetAllHairStylistsQuery = { __typename?: 'Query', getAllHairStylists: Array<{ __typename?: 'User', id: number, name: string, rating: number, salon?: { __typename?: 'Salon', id: number, name: string, rating: number } | null }> };
 
 export type GetReviewsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  options: GetReviewsOptions;
 }>;
 
 
-export type GetReviewsQuery = { __typename?: 'Query', getReviews?: Array<{ __typename?: 'Review', id: number, comment: string, createdAt: string, hairstylist_rating: number, postedBy?: { __typename?: 'User', name: string } | null, user?: { __typename?: 'User', name: string } | null }> | null };
+export type GetReviewsQuery = { __typename?: 'Query', getReviews?: Array<{ __typename?: 'Review', id: number, comment: string, createdAt: string, hairstylist_rating: number, postedBy?: { __typename?: 'User', id: number, name: string } | null, user?: { __typename?: 'User', id: number, name: string } | null }> | null };
 
 export type GetSalonQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -318,16 +323,18 @@ export function useGetAllHairStylistsQuery(options?: Omit<Urql.UseQueryArgs<GetA
   return Urql.useQuery<GetAllHairStylistsQuery>({ query: GetAllHairStylistsDocument, ...options });
 };
 export const GetReviewsDocument = gql`
-    query getReviews($id: Int!) {
-  getReviews(id: $id) {
+    query getReviews($options: GetReviewsOptions!) {
+  getReviews(options: $options) {
     id
     comment
     createdAt
     hairstylist_rating
     postedBy {
+      id
       name
     }
     user {
+      id
       name
     }
   }
