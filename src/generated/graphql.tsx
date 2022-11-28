@@ -21,6 +21,18 @@ export type ErrorsField = {
   message: Scalars['String'];
 };
 
+export type Gallery = {
+  __typename?: 'Gallery';
+  id: Scalars['Float'];
+  photos: Array<Scalars['String']>;
+  salon?: Maybe<Salon>;
+};
+
+export type GalleryOptions = {
+  imageLink: Scalars['String'];
+  salonID: Scalars['Float'];
+};
+
 export type GetReviewsOptions = {
   id: Scalars['Float'];
   sortBy: Scalars['String'];
@@ -28,6 +40,7 @@ export type GetReviewsOptions = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createGallery: Gallery;
   createReview: Review;
   createSalon: Salon;
   createService: Service;
@@ -35,6 +48,11 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   register: UserResponse;
   updateUserPicture: Scalars['String'];
+};
+
+
+export type MutationCreateGalleryArgs = {
+  options: GalleryOptions;
 };
 
 
@@ -72,11 +90,17 @@ export type Query = {
   __typename?: 'Query';
   getAllHairStylists: Array<User>;
   getAllSalons?: Maybe<Array<Salon>>;
+  getGallery?: Maybe<Gallery>;
   getReviews?: Maybe<Array<Review>>;
   getSalon?: Maybe<Salon>;
   getServices: Array<Service>;
   getUsers: Array<User>;
   me?: Maybe<User>;
+};
+
+
+export type QueryGetGalleryArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -113,6 +137,7 @@ export type ReviewOptions = {
 
 export type Salon = {
   __typename?: 'Salon';
+  gallery?: Maybe<Gallery>;
   id: Scalars['Float'];
   name: Scalars['String'];
   rating: Scalars['Float'];
@@ -204,6 +229,13 @@ export type GetAllSalonsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllSalonsQuery = { __typename?: 'Query', getAllSalons?: Array<{ __typename?: 'Salon', id: number, name: string, rating: number }> | null };
+
+export type GetGalleryQueryVariables = Exact<{
+  getGalleryId: Scalars['Float'];
+}>;
+
+
+export type GetGalleryQuery = { __typename?: 'Query', getGallery?: { __typename?: 'Gallery', id: number, photos: Array<string> } | null };
 
 export type GetAllHairStylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -303,6 +335,18 @@ export const GetAllSalonsDocument = gql`
 
 export function useGetAllSalonsQuery(options?: Omit<Urql.UseQueryArgs<GetAllSalonsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetAllSalonsQuery>({ query: GetAllSalonsDocument, ...options });
+};
+export const GetGalleryDocument = gql`
+    query getGallery($getGalleryId: Float!) {
+  getGallery(id: $getGalleryId) {
+    id
+    photos
+  }
+}
+    `;
+
+export function useGetGalleryQuery(options: Omit<Urql.UseQueryArgs<GetGalleryQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetGalleryQuery>({ query: GetGalleryDocument, ...options });
 };
 export const GetAllHairStylistsDocument = gql`
     query getAllHairStylists {

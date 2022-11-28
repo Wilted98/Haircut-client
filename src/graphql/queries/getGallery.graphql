@@ -1,0 +1,6 @@
+query getGallery($getGalleryId: Float!) {
+  getGallery(id: $getGalleryId) {
+    id
+    photos
+  }
+}

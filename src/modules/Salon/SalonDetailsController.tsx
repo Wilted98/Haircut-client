@@ -10,6 +10,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/MainNavigator';
 import ReviewList from './components/ReviewList';
 import {useIsFocused} from '@react-navigation/native';
+import GalleryList from './components/GalleryList';
 
 const heightScreen = Dimensions.get('screen').height;
 
@@ -100,8 +101,10 @@ const SalonDetails: React.FC<SalonDetailsProps> = ({SalonId}) => {
         <View style={{marginTop: 25}}>
           {activeTitle === 0 ? (
             <ServiceList serviceList={data?.getSalon?.services} />
+          ) : activeTitle === 2 ? (
+            <ReviewList id={SalonId} />
           ) : (
-            activeTitle === 2 && <ReviewList id={SalonId} />
+            activeTitle === 1 && <GalleryList id={SalonId} />
           )}
         </View>
       </View>
